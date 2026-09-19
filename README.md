@@ -1,7 +1,7 @@
 # Gorbe
 
 
-### python Command Line utility to setup project
+### python command-line utility to setup project
 
 it use for fastapi flask and django
 used in teminal for setup project
