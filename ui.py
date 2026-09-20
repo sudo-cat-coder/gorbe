@@ -17,3 +17,12 @@ def pip_or_uv():
 def docker():
     docker = questionary.confirm(('Do you want docker?')).ask()
     return docker
+
+def framework():
+    framework_name = questionary.select('wich framework do you want?',
+                                        choices=[
+                                        'Django&DRF',
+                                        'FastAPI',
+                                        'Flask'
+                                        ]).ask()
+    return framework_name
