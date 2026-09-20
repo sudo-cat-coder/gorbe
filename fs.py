@@ -14,6 +14,6 @@ def create_folder(name):
     if chack_name(name):
         os.mkdir(f'{os.getcwd()}/{name}')
         if str(name) in os.listdir():
-            return f'{os.getcwd()}/{name}'
+            return True
         raise RuntimeError('i dont know just we have error')
-    raise RuntimeError('folder dose exist')
+    return False
