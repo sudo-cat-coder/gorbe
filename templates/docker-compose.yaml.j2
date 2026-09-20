@@ -1,0 +1,11 @@
+services: 
+  {% if db_name == 'postgresql' %}
+  db:
+    image: postgres:{{ db_version | default('latest')}}
+    environment:
+      POSTGRES_DB: {{ db_name }}
+      POSTGRES_USER: {{ db_user }}
+      POSTGRES_PASSWORD: {{ db_password }}
+    ports:
+        - {{ db_port }}
+  {% endif %}
