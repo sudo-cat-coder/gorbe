@@ -5,7 +5,7 @@ import os
 
 def template_render(content : Dict):
     env = Environment(loader=FileSystemLoader(os.getcwd()) , trim_blocks=True , lstrip_blocks=True)
-    template = env.get_template('docker-compose.yaml.j2')
+    template = env.get_template('templates/docker-compose.yaml.j2')
 
     output = template.render(**content)
     with open('docker-compose.yaml' , 'w') as f:
