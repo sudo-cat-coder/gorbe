@@ -14,3 +14,6 @@ def pip_or_uv():
     #pov short of pip or uv XD
     pov = questionary.select('which one?' , choices=['pip' , 'uv']) .ask()
     return pov
+def docker():
+    docker = questionary.confirm(('Do you want docker?')).ask()
+    return docker
