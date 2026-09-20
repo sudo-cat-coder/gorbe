@@ -10,5 +10,5 @@ def database(args : List[str]):
 
 def pip_or_uv():
     #pov short of pip or uv XD
-    pov = questionary.select('which one?' , choices=['pip' , 'uv']) 
+    pov = questionary.select('which one?' , choices=['pip' , 'uv']) .ask()
     return pov
