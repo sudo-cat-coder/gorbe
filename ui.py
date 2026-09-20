@@ -7,3 +7,8 @@ def ask_name():
 def database(args : List[str]):
     database_name = questionary.select('what is your database' , choices=args , default='sqlite' , qmark='➽').ask()
     return database_name
+
+def pip_or_uv():
+    #pov short of pip or uv XD
+    pov = questionary.select('which one?' , choices=['pip' , 'uv']) 
+    return pov
