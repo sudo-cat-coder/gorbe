@@ -10,10 +10,10 @@ def chack_name(name):
 
 
 # create_folder 
-def create_folder(name):
+def create_folder(name) -> dict :
     if chack_name(name):
         os.mkdir(f'{os.getcwd()}/{name}')
         if str(name) in os.listdir():
-            return True
+            return {'state' : True , 'path' : f'{os.getcwd()}/{name}'}
         raise RuntimeError('i dont know just we have error')
-    return False
+    return {'state' : False}
