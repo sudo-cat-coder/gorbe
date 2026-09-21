@@ -45,3 +45,13 @@ def wanrning(path:str):
     )
 
 
+
+
+def user_perfrence_for_database(db_name : str) -> dict:
+    content = {}
+    content['DB']=questionary.text('what is DB name?' , default='db' ).ask()
+    content['USER']=questionary.text('what is DB user name?' , default='root').ask()
+    content['PASSWORD']=questionary.text('what is DB password?' , default='123').ask()
+    if db_name == 'mysql':
+        content['ROOT_PASSWORD'] = questionary.text('what is your root password' , default='123').ask()
+    return content
