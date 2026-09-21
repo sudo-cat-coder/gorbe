@@ -1,5 +1,10 @@
 import questionary
 from typing import List
+import rich
+from rich.console import Console
+from rich.panel import Panel
+
+
 def ask_name():
     name = questionary.text('enter project name').ask()
     while not name:
@@ -26,3 +31,17 @@ def framework():
                                         'Flask'
                                         ]).ask()
     return framework_name
+
+def wanrning(path:str):
+    console = Console()
+
+    console.print(
+    Panel(
+        "Virtual environment not activate .\n"
+        f"Run `source {path}/.venv/bin/activate` to activate it.",
+        title="⚠ Warning",
+        border_style="red"
+        )
+    )
+
+
