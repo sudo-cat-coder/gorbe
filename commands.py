@@ -2,14 +2,21 @@ import os
 import subprocess
 import rich
 from rich.console import Console
+
 def install_packeage(name):
     os.system(f'uv add {name}')
     os.system(f'uv pip install {name}')
     return
 
-def inital(path : str , name:str):
+def uv_inital(path : str , name:str, package:str):
     
+    console = Console()
     os.system(f'uv init {path}/{name} > /dev/null 2>&1 ')
+    #os.system(f' cd {os.getcwd()}/{name}/{name} ; uv add {package} > /dev/null 2>&1')
+    with console.status("[bold green]Installing packages...[/bold green]",
+                        spinner="dots"):
+
+        os.system(f' cd {os.getcwd()}/{name}/{name} && uv add {package}> /dev/null 2>&1' )
     return 'created'
 
 def venv(path):
@@ -31,3 +38,6 @@ def install_package_pip(name: str, path: str):
         )
 
     return result.returncode == 0
+
+def django_start(name: str , path:str):
+    os.system(f'cd {os.getcwd()}/{name}/{name}/src && uv run django-admin startproject {name} .')
