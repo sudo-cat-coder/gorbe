@@ -39,5 +39,7 @@ def install_package_pip(name: str, path: str):
 
     return result.returncode == 0
 
-def django_start(name: str , path:str):
-    os.system(f'cd {os.getcwd()}/{name}/{name}/src && uv run django-admin startproject {name} .')
+def django_start(name: str , path:str | None = None):
+    os.system(f'cd {os.getcwd()}/{name}/{name}/src && uv run django-admin startproject {name}_django .')
+    #print(f'cd {os.getcwd()}/{name}/src && uv run django-admin startproject {name} .')
+    return
