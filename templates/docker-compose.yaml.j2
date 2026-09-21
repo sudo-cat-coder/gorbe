@@ -1,11 +1,31 @@
 services: 
-  {% if db_name == 'postgresql' %}
+{% if db_name == "mysql" %}
+
   db:
-    image: postgres:{{ db_version | default('latest')}}
+    image: mysql:latest
+    container_name: mysql
+    restart: unless-stopped
     environment:
-      POSTGRES_DB: {{ db_name }}
-      POSTGRES_USER: {{ db_user }}
-      POSTGRES_PASSWORD: {{ db_password }}
+      MYSQL_ROOT_PASSWORD: {{ROOT_PASSWORD | default(123)}}
+      MYSQL_DATABASE: {{DB | default(db)}}
+      MYSQL_USER: {{USER | default(root)}}
+      MYSQL_PASSWORD: {{PASSWORD | default(123)}}
     ports:
-        - {{ db_port }}
-  {% endif %}
+      - "3306:3306"
+ 
+
+
+{% elif db_name == "postgresql" %}
+
+  db:
+    image: postgres:latest
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: {{DB | default(db)}}
+      POSTGRES_USER: {{USER | default(root)}}
+      POSTGRES_PASSWORD: {{PASSWORD | default(123)}}
+    ports:
+      - "5432:5432"
+
+{% endif %}
