@@ -3,12 +3,12 @@ from typing import Dict
 from jinja2 import Environment , FileSystemLoader
 import os
 
-def template_render(content : Dict):
+def docker_template(content : Dict , path : str):
     env = Environment(loader=FileSystemLoader(os.getcwd()) , trim_blocks=True , lstrip_blocks=True)
     template = env.get_template('templates/docker-compose.yaml.j2')
 
     output = template.render(**content)
-    with open('docker-compose.yaml' , 'w') as f:
+    with open(f'{path}/docker-compose.yaml' , 'w') as f:
         f.write(output)
         return 'docker compose created'
 

@@ -1,4 +1,4 @@
-from template import template_render
+from template import docker_template
 from ui import ask_name , database , pip_or_uv , docker , wanrning
 from fs import create_folder
 from commands import inital , venv , install_package_pip
@@ -20,6 +20,6 @@ if pov == 'pip':
 docker = docker() 
 print(docker)
 if docker:
-    template_render({'db_name' : db_name} , path= is_created['path'])
+    docker_template({'db_name' : db_name} , path= is_created['path'])
 
 wanrning(path=is_created['path'])
