@@ -26,7 +26,7 @@ def docker():
 def framework():
     framework_name = questionary.select('wich framework do you want?',
                                         choices=[
-                                        'Django&DRF',
+                                        'Django',
                                         'FastAPI',
                                         'Flask'
                                         ]).ask()
@@ -55,3 +55,6 @@ def user_perfrence_for_database(db_name : str) -> dict:
     if db_name == 'mysql':
         content['ROOT_PASSWORD'] = questionary.text('what is your root password' , default='123').ask()
     return content
+
+def api_key():
+    questionary.text('enter your apki key : ').ask()
