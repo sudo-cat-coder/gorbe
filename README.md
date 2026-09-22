@@ -3,10 +3,10 @@
 
 ### python command-line utility to setup project
 
-it use for fastapi flask and django
-in teminal for setup project
+it use for fastapi flask and django\
+in teminal for setup project\
 
-##### features
+#### features
 setup with uv\
 setup with standard project structure\
 install all pakeges\
@@ -32,6 +32,10 @@ cd gorbe
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
+### useage
+```
+gorbe
+```
 
 ##### project diagram
 ![project diagram](./gorbeh.jpg)
