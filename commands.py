@@ -45,7 +45,6 @@ def install_package_pip(names: List[str], path: str):
 
             if result.returncode != 0:
 
-                os.system(f'cd {path} && pip freeze > requirements.txt' )
                 return False
 
     return True
@@ -56,7 +55,10 @@ def django_start(name: str , path:str | None = None):
     return
 
 
-def git_init(path:str):
+def git_init_and_reqirements(path:str):
+
+    
+    os.system(f'cd {path} && pip freeze > requirements.txt' )
     os.system(f'cd {path} && git init > /dev/null 2>&1 ')
     return
 
