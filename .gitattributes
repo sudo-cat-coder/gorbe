@@ -1,3 +1,24 @@
 *.html linguist-vendored
 *.tex
 *.tex linguist-detectable=false
+# Keep Python
+*.py linguist-detectable=true
+
+# Keep Jinja
+*.jinja linguist-detectable=true
+*.jinja2 linguist-detectable=true
+
+# Ignore TeX
+*.tex linguist-detectable=false
+
+# Ignore HTML
+*.html linguist-detectable=false
+
+# Ignore CSS / JS if present
+*.css linguist-detectable=false
+*.js linguist-detectable=false
+
+# Ignore generated/build files
+dist/* linguist-generated=true
+build/* linguist-generated=true
+*.egg-info/* linguist-generated=true
