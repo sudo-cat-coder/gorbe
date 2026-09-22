@@ -13,3 +13,4 @@ setuptools==84.0.0
 shellingham==1.5.4
 typer==0.27.2
 wcwidth==0.8.4
+jinja==3.1.6

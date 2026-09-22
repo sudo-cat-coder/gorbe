@@ -1,0 +1,27 @@
+
+*.py linguist-detectable=true
+*.jinja linguist-detectable=true
+*.jinja2 linguist-detectable=true
+
+
+*.html linguist-detectable=false
+*.html linguist-vendored
+*.css linguist-detectable=false
+*.js linguist-detectable=false
+
+*.tex  linguist-detectable=false
+*.toc  linguist-detectable=false
+*.sty  linguist-detectable=false
+*.cls  linguist-detectable=false
+*.def  linguist-detectable=false
+*.lvt  linguist-detectable=false
+
+
+# *.tex linguist-generated
+# *.toc linguist-generated
+# ...
+
+
+dist/* linguist-generated=true
+build/* linguist-generated=true
+*.egg-info/* linguist-generated=true
