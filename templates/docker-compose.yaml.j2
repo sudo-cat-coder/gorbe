@@ -1,4 +1,5 @@
-services: 
+services:
+
   backend:
     build:
       context: .
@@ -9,35 +10,33 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+{%- if db_name in ["mysql", "postgresql"] %}
     depends_on:
       - db
-{% if db_name == "mysql" %}
+{%- endif %}
+{%- if db_name == "mysql" %}
 
   db:
     image: mysql:latest
-    container_name: mysql
+    container_name: {{ project_name }}_mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: {{ROOT_PASSWORD | default('123')}}
-      MYSQL_DATABASE: {{DB | default('db')}}
-      MYSQL_USER: {{USER | default('root')}}
-      MYSQL_PASSWORD: {{PASSWORD | default('123')}}
+      MYSQL_ROOT_PASSWORD: {{ ROOT_PASSWORD | default('123') }}
+      MYSQL_DATABASE: {{ DB | default('db') }}
+      MYSQL_USER: {{ USER | default('root') }}
+      MYSQL_PASSWORD: {{ PASSWORD | default('123') }}
     ports:
       - "3306:3306"
- 
-
-
-{% elif db_name == "postgresql" %}
+{%- elif db_name == "postgresql" %}
 
   db:
     image: postgres:latest
-    container_name: postgres
+    container_name: {{ project_name }}_postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: {{DB | default('db')}}
-      POSTGRES_USER: {{USER | default('root')}}
-      POSTGRES_PASSWORD: {{PASSWORD | default('123')}}
+      POSTGRES_DB: {{ DB | default('db') }}
+      POSTGRES_USER: {{ USER | default('root') }}
+      POSTGRES_PASSWORD: {{ PASSWORD | default('123') }}
     ports:
       - "5432:5432"
-
-{% endif %}
+{%- endif %}
