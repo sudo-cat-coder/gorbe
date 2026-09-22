@@ -1,9 +1,8 @@
-from re import U
 
 from template import docker_template ,fastapi_project , database_template
 from ui import ask_name , database , pip_or_uv , docker , wanrning , user_perfrence_for_database , framework
 from fs import create_folder
-from commands import uv_inital , venv , install_package_pip , django_start , git_init_and_reqirements
+from commands import uv_inital , venv , install_package_pip , django_start , git_init_and_reqirements , django_start_pip
 
 name = ask_name()
 is_created=create_folder(name=name)
@@ -23,7 +22,7 @@ if pov == 'pip':
     venv(path=is_created['path'])
     install_package_pip(['cowsay' , 'requests'] , path=is_created['path'])
     if framework_name == 'Django':
-        django_start(name=name)
+        django_start_pip(path=PIP_PATH , name=name)
     if framework_name == 'FastAPI':
         fastapi_project(name=name , pov='pip' ,path=PIP_PATH)
         database_template(content={'db_name' : db_name} , path=PIP_PATH , name=name , pov='pip')

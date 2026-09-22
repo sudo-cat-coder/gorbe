@@ -53,7 +53,9 @@ def django_start(name: str , path:str | None = None):
     os.system(f'cd {os.getcwd()}/{name}/{name}/src && uv run django-admin startproject {name}_django .')
     #print(f'cd {os.getcwd()}/{name}/src && uv run django-admin startproject {name} .')
     return
-
+def django_start_pip(path:str , name:str):
+    os.system(f'cd {path} && django-admin startproject {name}_django .')
+    return
 
 def git_init_and_reqirements(path:str):
 
