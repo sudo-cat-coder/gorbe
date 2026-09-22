@@ -1,4 +1,16 @@
 services: 
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
 {% if db_name == "mysql" %}
 
   db:
@@ -6,10 +18,10 @@ services:
     container_name: mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: {{ROOT_PASSWORD | default(123)}}
-      MYSQL_DATABASE: {{DB | default(db)}}
-      MYSQL_USER: {{USER | default(root)}}
-      MYSQL_PASSWORD: {{PASSWORD | default(123)}}
+      MYSQL_ROOT_PASSWORD: {{ROOT_PASSWORD | default('123')}}
+      MYSQL_DATABASE: {{DB | default('db')}}
+      MYSQL_USER: {{USER | default('root')}}
+      MYSQL_PASSWORD: {{PASSWORD | default('123')}}
     ports:
       - "3306:3306"
  
@@ -22,9 +34,9 @@ services:
     container_name: postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: {{DB | default(db)}}
-      POSTGRES_USER: {{USER | default(root)}}
-      POSTGRES_PASSWORD: {{PASSWORD | default(123)}}
+      POSTGRES_DB: {{DB | default('db')}}
+      POSTGRES_USER: {{USER | default('root')}}
+      POSTGRES_PASSWORD: {{PASSWORD | default('123')}}
     ports:
       - "5432:5432"
 
