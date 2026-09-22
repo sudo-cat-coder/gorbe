@@ -44,9 +44,10 @@ def install_package_pip(names: List[str], path: str):
             )
 
             if result.returncode != 0:
+
+                os.system(f'cd {path} && pip freeze > requirements.txt' )
                 return False
 
-    os.system(f'cd {path} && pip freeze > requirements.txt' )
     return True
 
 def django_start(name: str , path:str | None = None):
