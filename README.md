@@ -12,6 +12,26 @@ setup with standard project structure\
 install all pakeges\
 optional to add dockerfile and docker compose.yaml\
 
+## Installation
+
+### Linux / macOS
+
+```bash
+git clone https://github.com/sudo-cat-coder/gorbe.git
+cd gorbe
+chmod +x install.sh
+./install.sh
+
+```
+
+### Windows
+
+```bash
+git clone https://github.com/sudo-cat-coder/gorbe.git
+cd gorbe
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+```
+
 
 ##### project diagram
 ![project diagram](./gorbeh.jpg)

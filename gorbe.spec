@@ -3,7 +3,7 @@ from PyInstaller.utils.hooks import collect_all
 
 datas = [('templates', 'templates')]
 binaries = []
-hiddenimports = ['typer', 'typer.main', 'click', 'rich', 'rich.console', 'rich.table', 'rich.text', 'rich.panel', 'rich.prompt', 'rich.syntax', 'rich.columns', 'rich._unicode_data', 'questionary', 'prompt_toolkit', 'shellingham', 'jinja2', 'jinja2.ext', 'jinja2.loaders', 'jinja2.runtime', 'jinja2.utils', 'markupsafe']
+hiddenimports = []
 tmp_ret = collect_all('jinja2')
 datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
 tmp_ret = collect_all('markupsafe')
@@ -19,7 +19,7 @@ a = Analysis(
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=['numpy', 'PIL', 'PIL.Image', 'PIL.ImageFilter', 'matplotlib', 'scipy', 'pandas', 'tkinter'],
+    excludes=['numpy', 'PIL', 'matplotlib', 'scipy', 'pandas', 'tkinter'],
     noarchive=False,
     optimize=0,
 )

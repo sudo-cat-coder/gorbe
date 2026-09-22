@@ -59,10 +59,11 @@ import sys
 import os
 
 def get_templates_path():
+    """Return the correct templates path whether running from source or PyInstaller bundle."""
     if getattr(sys, 'frozen', False):
-        # حالت اجرای فایل اجرایی PyInstaller
+        # Running as PyInstaller executable
         base = sys._MEIPASS
     else:
-        # حالت اجرای عادی از سورس
+        # Running from source
         base = os.path.dirname(os.path.abspath(__file__))
-    return os.path.join(base, "templates")
+    return os.path.join(base, 'templates')
