@@ -1,6 +1,4 @@
 *.html linguist-vendored
-*.tex
-*.tex linguist-detectable=false
 # Keep Python
 *.py linguist-detectable=true
 
@@ -10,6 +8,8 @@
 
 # Ignore TeX
 *.tex linguist-detectable=false
+*.tex linguist-language=Text
+
 
 # Ignore HTML
 *.html linguist-detectable=false
