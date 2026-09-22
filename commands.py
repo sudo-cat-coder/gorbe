@@ -20,6 +20,8 @@ def uv_inital(path : str , name:str, packages : List[str]):
         for package in packages :
 
             os.system(f' cd {os.getcwd()}/{name}/{name} && uv add {package}> /dev/null 2>&1' )
+            os.system(f'pip freeze > requirements.txt' )
+            
     return 'created'
 
 def venv(path):
@@ -43,6 +45,8 @@ def install_package_pip(names: List[str], path: str):
 
             if result.returncode != 0:
                 return False
+
+    os.system(f'cd {path} && pip freeze > requirements.txt' )
     return True
 
 def django_start(name: str , path:str | None = None):
