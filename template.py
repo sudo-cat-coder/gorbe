@@ -2,11 +2,12 @@ from typing import Dict
 
 from jinja2 import Environment , FileSystemLoader
 import os
+from commands import get_templates_path
 
 from jinja2.defaults import TRIM_BLOCKS
 
 def docker_template(content : Dict , path : str , framework_name:str):
-    env = Environment(loader=FileSystemLoader(os.getcwd()) , trim_blocks=True , lstrip_blocks=True)
+    env = Environment(loader=FileSystemLoader(get_templates_path()) , trim_blocks=True , lstrip_blocks=True)
     template = env.get_template('templates/docker-compose.yaml.j2')
     dockerfile_template = env.get_template('templates/dockerfile.j2')
 
@@ -20,7 +21,7 @@ def docker_template(content : Dict , path : str , framework_name:str):
 
 
 def database_template(content : Dict , path:str , pov : str = 'pip' , name:str | None = None ) :
-    env = Environment(loader=FileSystemLoader(os.getcwd()),trim_blocks=True , lstrip_blocks=True)
+    env = Environment(loader=FileSystemLoader(get_templates_path()),trim_blocks=True , lstrip_blocks=True)
     template = env.get_template('/templates/database.py.j2')
     output = template.render(**content)
     if pov == 'uv':
@@ -35,7 +36,7 @@ def database_template(content : Dict , path:str , pov : str = 'pip' , name:str |
 
 
 def fastapi_project(path:str | None = None ,name:str | None = None ,pov : str | None = None, content : Dict | None = None) -> None:
-    env = Environment(loader=FileSystemLoader(os.getcwd()),trim_blocks=True , lstrip_blocks=True)
+    env = Environment(loader=FileSystemLoader(get_templates_path()),trim_blocks=True , lstrip_blocks=True)
     template_main = env.get_template('/templates/main.py.j2')
     template_models = env.get_template('/templates/models.py.j2')
     template_router = env.get_template('/templates/router.py.j2')

@@ -54,3 +54,15 @@ def django_start(name: str , path:str | None = None):
 def git_init(path:str):
     os.system(f'cd {path} && git init > /dev/null 2>&1 ')
     return
+
+import sys
+import os
+
+def get_templates_path():
+    if getattr(sys, 'frozen', False):
+        # حالت اجرای فایل اجرایی PyInstaller
+        base = sys._MEIPASS
+    else:
+        # حالت اجرای عادی از سورس
+        base = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base, "templates")
