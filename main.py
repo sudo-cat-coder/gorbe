@@ -1,7 +1,9 @@
+from re import U
+
 from template import docker_template ,fastapi_project , database_template
 from ui import ask_name , database , pip_or_uv , docker , wanrning , user_perfrence_for_database , framework
 from fs import create_folder
-from commands import uv_inital , venv , install_package_pip , django_start
+from commands import uv_inital , venv , install_package_pip , django_start , git_init
 
 name = ask_name()
 is_created=create_folder(name=name)
@@ -29,6 +31,7 @@ if pov == 'pip':
 
         content = {**user_perfrence_for_database(db_name) , 'db_name' : db_name}
         docker_template(content , path=PIP_PATH ,framework_name=framework_name)
+    git_init(path=PIP_PATH)
 
 
 if pov == 'uv':
@@ -42,6 +45,8 @@ if pov == 'uv':
 
         content = {**user_perfrence_for_database(db_name) , 'db_name' : db_name}
         docker_template(content , path=UV_PATH ,framework_name=framework_name)
+
+    git_init(path=UV_PATH)
 
 
 
