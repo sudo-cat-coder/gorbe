@@ -1,5 +1,6 @@
 import os
 import subprocess
+from typing import List
 import rich
 from rich.console import Console
 
@@ -8,7 +9,7 @@ def install_packeage(name):
     os.system(f'uv pip install {name}')
     return
 
-def uv_inital(path : str , name:str, package:str):
+def uv_inital(path : str , name:str, packages : List[str]):
     
     console = Console()
     os.system(f'uv init {path}/{name} > /dev/null 2>&1 ')
@@ -16,14 +17,16 @@ def uv_inital(path : str , name:str, package:str):
     with console.status("[bold green]Installing packages...[/bold green]",
                         spinner="dots"):
 
-        os.system(f' cd {os.getcwd()}/{name}/{name} && uv add {package}> /dev/null 2>&1' )
+        for package in packages :
+
+            os.system(f' cd {os.getcwd()}/{name}/{name} && uv add {package}> /dev/null 2>&1' )
     return 'created'
 
 def venv(path):
     subprocess.run(['python' , '-m' , 'venv' , '.venv'],check=True , cwd=path)
     return   
 
-def install_package_pip(name: str, path: str):
+def install_package_pip(names: List[str], path: str):
     console = Console()
     venv_path = f"{path}/.venv/bin/python"
 
@@ -31,13 +34,16 @@ def install_package_pip(name: str, path: str):
         "[bold green]Installing packages...[/bold green]",
         spinner="dots"
     ):
-        result = subprocess.run(
-            [venv_path, "-m", "pip", "install", name],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
-        )
+        for name in names:
+            result = subprocess.run(
+                [venv_path, "-m", "pip", "install", name],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
+            )
 
-    return result.returncode == 0
+            if result.returncode != 0:
+                return False
+    return True
 
 def django_start(name: str , path:str | None = None):
     os.system(f'cd {os.getcwd()}/{name}/{name}/src && uv run django-admin startproject {name}_django .')
