@@ -1,6 +1,7 @@
 .venv
 venv 
 
+BUGS.md
 
 __pycache__
 ./__pycache__/
