@@ -1,0 +1,257 @@
+Metadata-Version: 2.4
+Name: gorbe
+Version: 0.2.0
+Summary: Interactive project scaffolder for FastAPI, Django, and Flask
+Author: sudo-cat-coder
+License: MIT License
+        
+        Copyright (c) 2026 sudo-cat-coder
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: jinja2>=3.1.6
+Requires-Dist: questionary>=2.1.1
+Requires-Dist: rich>=13.7.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.3.0; extra == "dev"
+Requires-Dist: pyyaml>=6.0.0; extra == "dev"
+Requires-Dist: ruff>=0.9.0; extra == "dev"
+Provides-Extra: build
+Requires-Dist: pyinstaller>=6.10.0; extra == "build"
+Dynamic: license-file
+
+# Gorbe
+
+Interactive command-line scaffolder for Python web projects. Answer a few
+prompts and Gorbe creates the project, installs dependencies, writes the
+application files, optionally adds Docker support, and initializes Git.
+
+```
+$ gorbe
+? Project name: my-app
+? Framework: FastAPI
+? Database: PostgreSQL
+? Package manager: uv (recommended)
+? Generate Docker files? yes
+? Database name: app
+? Database user: app
+? Database password: app
+? MySQL root password: root
+```
+
+The same thing can be run non-interactively:
+
+```bash
+gorbe \
+  --name my-app \
+  --framework fastapi \
+  --database postgresql \
+  --manager uv \
+  --docker \
+  --db-name app \
+  --db-user app \
+  --db-password secret
+```
+
+## Features
+
+- **FastAPI** — `app/` package with an application entrypoint, router, models,
+  schemas, and async SQLAlchemy database setup.
+- **Flask** — `app/` package with an application entrypoint and Flask-SQLAlchemy
+  setup.
+- **Django** — scaffolded with `django-admin startproject`.
+- **Package managers** — `uv` or `pip` with a virtual environment.
+- **Databases** — SQLite, MySQL, and PostgreSQL.
+- **Docker (optional)** — `Dockerfile`, `.dockerignore`, and
+  `docker-compose.yaml`, including a database service, healthcheck, and volume.
+- **Project hygiene** — `.gitignore`, `requirements.txt`, and a Git repository.
+- **Installer** — package as a single binary with PyInstaller.
+
+## Requirements
+
+- Python 3.12 or newer
+- Git
+- `uv` when using the uv workflow
+- Docker when generating and running Docker files
+
+## Installation
+
+### From source
+
+With uv:
+
+```bash
+git clone https://github.com/sudo-cat-coder/gorbe.git
+cd gorbe
+uv sync
+uv run gorbe
+```
+
+With pip:
+
+```bash
+git clone https://github.com/sudo-cat-coder/gorbe.git
+cd gorbe
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+gorbe
+```
+
+### Build a standalone binary
+
+Linux / macOS:
+
+```bash
+uv sync --extra build
+uv run pyinstaller --clean --noconfirm gorbe.spec
+chmod +x install.sh
+./install.sh
+```
+
+Windows:
+
+```powershell
+uv sync --extra build
+uv run pyinstaller --clean --noconfirm gorbe.spec
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+```
+
+The installers expect the built binary in `dist/`. On Linux/macOS it is copied
+to `/usr/local/bin`; on Windows it is copied to
+`%LOCALAPPDATA%\Programs\gorbe` and added to the user `PATH`.
+
+## Usage
+
+Run `gorbe` with no arguments for the interactive prompt, or use any of these
+options:
+
+| Option | Description |
+| ------ | ----------- |
+| `--name NAME` | Project name. |
+| `--framework {fastapi,django,flask}` | Framework to use. |
+| `--database {sqlite,mysql,postgresql}` | Database to configure. |
+| `--manager {pip,uv}` | Package manager to use. |
+| `--docker`, `--no-docker` | Generate Docker files. |
+| `--path PATH` | Directory in which to create the project. |
+| `--db-name NAME` | Database name used in Docker files. |
+| `--db-user USER` | Database user used in Docker files. |
+| `--db-password PASSWORD` | Database password used in Docker files. |
+| `--db-root-password PASSWORD` | MySQL root password used in Docker files. |
+| `--version` | Print the version and exit. |
+
+When an option is omitted, Gorbe asks for it interactively. Database credentials
+are only prompted for when Docker files are requested with MySQL or PostgreSQL.
+
+## Generated project
+
+FastAPI and Flask projects use the same layout:
+
+```
+my-app/
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── router.py          # FastAPI
+│   ├── schema.py          # FastAPI
+│   ├── database.py
+│   └── models.py
+├── .git/
+├── .gitignore
+├── .venv/
+├── requirements.txt
+├── pyproject.toml         # uv only
+├── uv.lock                # uv only
+├── Dockerfile             # optional
+├── .dockerignore          # optional
+└── docker-compose.yaml    # optional
+```
+
+Django projects are created at the project root:
+
+```
+my-app/
+├── manage.py
+├── my_app_django/
+│   └── settings.py
+├── .git/
+├── .gitignore
+├── .venv/
+├── requirements.txt
+└── ...
+```
+
+Dependencies are installed automatically. For pip projects, activate the
+virtual environment before running:
+
+```bash
+source my-app/.venv/bin/activate
+uvicorn app.main:app --reload
+```
+
+For uv projects:
+
+```bash
+cd my-app
+uv run uvicorn app.main:app --reload
+```
+
+## Databases
+
+FastAPI uses async SQLAlchemy; Flask uses sync SQLAlchemy.
+
+| Database | FastAPI driver | Flask driver |
+| -------- | -------------- | ------------ |
+| SQLite | `aiosqlite` | built in |
+| MySQL | `aiomysql` | `pymysql` |
+| PostgreSQL | `asyncpg` | `psycopg` |
+
+The generated database module reads `DATABASE_URL` from the environment and
+falls back to a local default. Docker Compose sets this variable automatically
+for the selected database.
+
+Django projects keep Django's default SQLite configuration. The database option
+only affects the generated Docker database service for Django projects.
+
+## Docker
+
+Generate a project with Docker files and start it with:
+
+```bash
+cd my-app
+docker compose up --build
+```
+
+FastAPI and Django are exposed on port `8000`; Flask is exposed on port `5000`.
+MySQL and PostgreSQL services include a persistent volume and a healthcheck.
+
+## Development
+
+```bash
+uv sync --extra dev
+uv run pytest
+uv run ruff check .
+```
+
+## License
+
+MIT — see [LICENSE](./LICENSE).

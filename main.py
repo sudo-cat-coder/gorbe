@@ -20,12 +20,14 @@ pov = pip_or_uv()
 docker = docker()
 if pov == 'pip':
     venv(path=is_created['path'])
-    install_package_pip(['cowsay' , 'requests'] , path=is_created['path'])
     if framework_name == 'Django':
         django_start_pip(path=PIP_PATH , name=name)
     if framework_name == 'FastAPI':
+
+        install_package_pip(['fastapi[all]'] , path=is_created['path'])
         fastapi_project(name=name , pov='pip' ,path=PIP_PATH)
         database_template(content={'db_name' : db_name} , path=PIP_PATH , name=name , pov='pip')
+
     if docker :
 
         content = {**user_perfrence_for_database(db_name) , 'db_name' : db_name}

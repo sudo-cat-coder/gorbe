@@ -1,0 +1,2 @@
+[console_scripts]
+gorbe = gorbe.cli:main
